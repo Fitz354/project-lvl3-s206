@@ -30,8 +30,8 @@ module.exports = () => ({
                 },
                 useBuiltIns: true,
               }],
+              'stage-0',
             ],
-
             plugins: ['syntax-dynamic-import'],
           },
         },

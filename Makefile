@@ -7,7 +7,6 @@ dev-server:
 	npm run dev -- --env development
 
 server:
-	npm i
 	rm -rf dist
 	npm run webpack -- -p --env production
 	npm run babel-node -- server.js
