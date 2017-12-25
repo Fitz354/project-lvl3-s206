@@ -29,12 +29,12 @@
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1",
     "css-loader": "^0.28.7",
-    "style-loader": "^0.19.1"
+    "style-loader": "^0.19.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.1.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
