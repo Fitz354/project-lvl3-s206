@@ -9,7 +9,6 @@ export default () => ({
     }),
   ],
   output: {
-    library: 'WebpackPackage',
     path: path.join(__dirname, '../..', 'dist'),
     filename: 'bundle.js',
     publicPath: '.',
@@ -27,25 +26,19 @@ export default () => ({
               ['env', {
                 modules: false,
                 targets: {
-                  browsers: '> 0%',
                   uglify: true,
                 },
                 useBuiltIns: true,
               }],
             ],
 
-            plugins: [
-              'syntax-dynamic-import',
-            ],
+            plugins: ['syntax-dynamic-import'],
           },
         },
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
