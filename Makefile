@@ -9,7 +9,7 @@ dev-server:
 server:
 	rm -rf dist
 	npm run webpack -- -p --env production
-	node server.js
+	npm run babel-node -- server.js
 
 test:
 	npm test
