@@ -1,5 +1,4 @@
-const webpackMerge = require('webpack-merge');
-const getBaseConfig = require('./base');
+import webpackMerge from 'webpack-merge';
+import getBaseConfig from './base';
 
-module.exports = () => webpackMerge(getBaseConfig(), {
-});
+export default () => webpackMerge(getBaseConfig(), {});

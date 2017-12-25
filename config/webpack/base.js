@@ -1,7 +1,7 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import path from 'path';
 
-module.exports = () => ({
+export default () => ({
   entry: './src/index.js',
   plugins: [
     new HtmlWebpackPlugin({
@@ -10,8 +10,7 @@ module.exports = () => ({
   ],
   output: {
     path: path.join(__dirname, '../..', 'dist'),
-    filename: 'bundle.js',
-    publicPath: '.',
+    filename: 'main.js',
   },
   module: {
     rules: [
