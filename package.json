@@ -1,0 +1,48 @@
+{
+  "name": "rss-reader-lozovsky",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest",
+    "babel-node": "babel-node",
+    "gulp": "gulp",
+    "eslint": "eslint src",
+    "webpack": "webpack",
+    "dev": "webpack-dev-server --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fitz354/project-lvl3-s206.git"
+  },
+  "author": "Lozovsky Alexander",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fitz354/project-lvl3-s206/issues"
+  },
+  "homepage": "https://github.com/Fitz354/project-lvl3-s206#readme",
+  "dependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-plugin-syntax-dynamic-import": "*",
+    "express": "^4.16.2",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.10.0",
+    "webpack-merge": "^4.1.1",
+    "css-loader": "^0.28.7",
+    "style-loader": "^0.19.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.1.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "jest": "^20",
+    "webpack-dev-server": "^2.9.7"
+  },
+  "engines": {
+    "node": "8.6.0",
+    "npm": "5.3.0"
+  }
+}
