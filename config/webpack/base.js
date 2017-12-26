@@ -12,6 +12,7 @@ export default () => ({
     ]),
     new HtmlWebpackPlugin({
       title: 'RSS Reader',
+      template: 'src/index.html',
     }),
     new HtmlWebpackIncludeAssetsPlugin({
       assets: ['css/bootstrap.min.css'],

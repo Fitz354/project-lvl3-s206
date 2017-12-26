@@ -8,8 +8,8 @@ dev-server:
 
 server:
 	rm -rf dist
-	npm run webpack -- -p --env production
-	npm run babel-node -- server.js
+	npm run webpack --open -- -p --env production
+	npm start
 
 test:
 	npm test
