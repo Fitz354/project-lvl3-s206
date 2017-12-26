@@ -1,4 +1,3 @@
-import './bootstrap.css';
-import component from './component';
+import rssAddForm from './rssAddForm';
 
-document.body.appendChild(component);
+document.body.appendChild(rssAddForm);

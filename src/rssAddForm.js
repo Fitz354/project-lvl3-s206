@@ -7,10 +7,10 @@ element.innerHTML =
 <h1 class="display-3">RSS Reader</h1>
 <form>
 <div class="form-group">
-<label for="rss">Добавьте rss поток</label>
-<input type="text" class="form-control" id="rss" aria-describedby="emailHelp" placeholder="add rss feed">
+<label for="rss">Add RSS feed</label>
+<input type="text" class="form-control" id="rss" aria-describedby="emailHelp" placeholder="add here">
 </div>
-<button type="submit" class="btn btn-primary">Добавить</button>
+<button type="submit" class="btn btn-primary">Add</button>
 </form>
 </div>`;
 
