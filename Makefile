@@ -7,9 +7,12 @@ dev-server:
 	npm run dev -- --env development
 
 server:
+	make build
+	npm start
+
+build:
 	rm -rf dist
 	npm run webpack --open -- -p --env production
-	npm start
 
 test:
 	npm test

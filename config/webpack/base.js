@@ -1,27 +1,21 @@
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import HtmlWebpackIncludeAssetsPlugin from 'html-webpack-include-assets-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import precss from 'precss';
+import autoprefixer from 'autoprefixer';
 import path from 'path';
 
 export default () => ({
-  entry: './src/index.js',
+  entry: './src/js/index.js',
   plugins: [
-    new CopyWebpackPlugin([
-      { from: 'node_modules/bootstrap/dist/css', to: 'css/' },
-      { from: 'node_modules/bootstrap/dist/fonts', to: 'fonts/' },
-    ]),
     new HtmlWebpackPlugin({
       title: 'RSS Reader',
       template: 'src/index.html',
     }),
-    new HtmlWebpackIncludeAssetsPlugin({
-      assets: ['css/bootstrap.min.css'],
-      append: true,
-    }),
+    new ExtractTextPlugin('css/style.css'),
   ],
   output: {
     path: path.join(__dirname, '../..', 'dist'),
-    filename: 'main.js',
+    filename: 'js/main.js',
   },
   module: {
     rules: [
@@ -47,8 +41,25 @@ export default () => ({
         },
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader' },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: () => [
+                  precss,
+                  autoprefixer,
+                ],
+              },
+            },
+            {
+              loader: 'sass-loader',
+            }],
+        }),
       },
     ],
   },
