@@ -44,10 +44,16 @@ const onRssFieldInput = ({ target: { value } }) => {
   submitButton.disabled = !isUrl(value);
 };
 
-const render = (status, data) => {
-  switch (status) {
+const onRssFormSubmit = async (evt) => {
+  evt.preventDefault();
+  submitButton.disabled = true;
+  const response = await axios.get(`${rssToJsonApiLink}${state.rssLink}`);
+  const { status, feed, items } = response.data;
+  const loadStatus = state.feedList.find(item => feed && item.feed.url === feed.url) ? 'alreadyAdded' : status;
+
+  switch (loadStatus) {
     case ('ok'):
-      state.feedList.push(data);
+      state.feedList.push({ feed, items });
       rssGetForm.reset();
       break;
     case ('error'):
@@ -60,15 +66,6 @@ const render = (status, data) => {
 
   renderFeedList(state.feedList);
   renderAlert(status);
-};
-
-const onRssFormSubmit = async (evt) => {
-  evt.preventDefault();
-  submitButton.disabled = true;
-  const response = await axios.get(`${rssToJsonApiLink}${state.rssLink}`);
-  const { status, feed, items } = response.data;
-  const loadStatus = state.feedList.find(item => feed && item.feed.url === feed.url) ? 'alreadyAdded' : status;
-  render(loadStatus, { feed, items });
   submitButton.disabled = false;
 };
 
