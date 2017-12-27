@@ -30,6 +30,7 @@ export default () => ({
               ['env', {
                 modules: false,
                 targets: {
+                  browsers: ['last 2 Chrome versions'],
                   uglify: true,
                 },
                 useBuiltIns: true,
