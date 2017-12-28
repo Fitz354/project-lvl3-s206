@@ -1,3 +1,4 @@
+import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import precss from 'precss';
@@ -7,6 +8,12 @@ import path from 'path';
 export default () => ({
   entry: './src/js/index.js',
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Popper: ['popper.js', 'default'],
+    }),
     new HtmlWebpackPlugin({
       title: 'RSS Reader',
       template: 'src/index.html',

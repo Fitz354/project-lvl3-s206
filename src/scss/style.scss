@@ -1,2 +1,7 @@
 @import "custom";
 @import "~bootstrap/scss/bootstrap";
+
+.posts-item {
+  display: flex;
+  justify-content: space-between;
+}
