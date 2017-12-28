@@ -1,4 +1,4 @@
-import rssForm from './rssForm';
+import rssReader from './rssReader';
 import '../scss/style.scss';
 
-rssForm();
+rssReader();

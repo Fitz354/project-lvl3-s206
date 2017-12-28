@@ -4,7 +4,7 @@ import 'bootstrap';
 
 export default () => {
   const state = {
-    rssLink: null,
+    rssLink: new URL('https://api.rss2json.com/v1/api.json'),
     feedsList: [],
   };
 
@@ -20,8 +20,6 @@ export default () => {
   const alertContainer = rssGetForm.querySelector('.alert');
   const feedsListContainer = document.querySelector('.feeds-list-container');
   const postDescription = document.querySelector('.post-description');
-
-  const rssToJsonApiLink = new URL('https://api.rss2json.com/v1/api.json');
 
   const renderAlert = (type) => {
     alertContainer.innerHTML = type ? alerts[type] : '';
@@ -41,10 +39,10 @@ export default () => {
 
   const renderPostsList = items =>
     `<ul class="posts-list list-group">
-      ${items.map(({ title, link }, index) =>
+    ${items.map(({ title, link }, index) =>
     `<li class="posts-item list-group-item" data-index=${index}>
       <a href=${link}>${title}</a>
-      <button data-toggle="modal" data-target="#post-description-modal">description</button>
+      <button class="btn btn-primary" data-toggle="modal" data-target="#post-description-modal">more</button>
     </li>`).join('')}
     </ul>`;
 
@@ -70,8 +68,7 @@ export default () => {
       renderAlert('alreadyAdded');
       return;
     }
-    rssToJsonApiLink.search = `rss_url=${value}`;
-    state.rssLink = rssToJsonApiLink;
+    state.rssLink.search = `rss_url=${value}`;
     submitButton.disabled = false;
   };
 
