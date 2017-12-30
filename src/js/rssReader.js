@@ -11,9 +11,9 @@ export default () => {
   };
 
   const alerts = {
-    success: '<div class="alert alert-success" role="alert">Rss feed added!</div>',
-    error: '<div class="alert alert-warning" role="alert">Rss feed is not found</div>',
-    alreadyAdded: '<div class="alert alert-info" role="alert">Rss already added</div>',
+    success: { cssClass: 'success', text: 'Rss feed added' },
+    error: { cssClass: 'warning', text: 'Rss feed is not found' },
+    alreadyAdded: { cssClass: 'info', text: 'Rss feed is already added' },
   };
 
   const rssGetForm = document.querySelector('.rss-get-form');
@@ -24,7 +24,15 @@ export default () => {
   const postDescription = document.querySelector('.post-description');
 
   const renderAlert = (type) => {
-    alertContainer.innerHTML = type ? alerts[type] : '';
+    const alert = alerts[type];
+    if (!alert) {
+      return;
+    }
+    alertContainer.innerHTML =
+    `<div class="alert alert-${alert.cssClass}" role="alert">
+      ${alert.text}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">×</button>
+    </div>`;
   };
 
   const onPostItemClick = (description) => {
@@ -53,7 +61,8 @@ export default () => {
   const renderFeed = ({ feed, items }) => {
     const item = document.createElement('li');
     item.classList.add('feeds-item', 'list-group-item');
-    item.innerHTML = `<h2 class="feeds-title">${feed.title}</h2><p>${feed.description}</p><ul class="posts-list list-group"></ul>`;
+    item.innerHTML =
+      `<h2 class="feeds-title">${feed.title}</h2><p>${feed.description}</p><ul class="posts-list list-group"></ul>`;
     item.dataset.id = feed.id;
     feedsListContainer.append(item);
     renderPostsList(feed.id, items);
