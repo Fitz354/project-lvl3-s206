@@ -16,20 +16,6 @@ export default () => {
     alreadyAdded: '<div class="alert alert-info" role="alert">Rss already added</div>',
   };
 
-  const createYQLRequest = (url) => {
-    const yql = new URL('https://query.yahooapis.com/v1/public/yql');
-    const randomSearch = Math.random();
-    const searchParams = {
-      q: `select * from feednormalizer where url='${url}?key=${randomSearch}'`,
-      env: 'store://datatables.org/alltableswithkeys',
-      format: 'json',
-      diagnostic: false,
-      maxage: 300,
-    };
-    yql.search = querystring.stringify(searchParams);
-    return yql;
-  };
-
   const rssGetForm = document.querySelector('.rss-get-form');
   const rssInputField = rssGetForm.querySelector('#rss');
   const submitButton = rssGetForm.querySelector('[type="submit"]');
@@ -87,11 +73,24 @@ export default () => {
     submitButton.disabled = false;
   };
 
-  const executeDate = (data, link) => { // eslint-disable-line
+  const createYQLRequest = (url) => {
+    const yqlLink = new URL('https://query.yahooapis.com/v1/public/yql');
+    const searchParams = {
+      q: `select * from feednormalizer where url='${url}?key=${Math.random()}'`,
+      env: 'store://datatables.org/alltableswithkeys',
+      format: 'json',
+      diagnostic: false,
+      maxage: 300,
+    };
+    yqlLink.search = querystring.stringify(searchParams);
+    return yqlLink;
+  };
+
+  const extractDate = (data) => { // eslint-disable-line
     try {
       const { title, description, item: items } = data.query.results.rss.channel;
 
-      return { feed: { title, description, url: link }, items };
+      return { feed: { title, description }, items };
     } catch (err) {
       renderAlert('error');
       submitButton.disabled = false;
@@ -105,8 +104,8 @@ export default () => {
     axios.get(requestUrl)
       .then(
         (response) => {
-          const rssFeed = executeDate(response.data, state.rssLink);
-          rssFeed.feed.id = uniqueId();
+          const rssFeed = extractDate(response.data);
+          rssFeed.feed = { ...rssFeed.feed, id: uniqueId(), url: state.rssLink };
           state.feedsList.push(rssFeed);
           rssGetForm.reset();
           renderFeed(rssFeed);
@@ -122,11 +121,11 @@ export default () => {
 
   setInterval(() => {
     state.feedsList.forEach((rssFeed) => {
-      const lastDate = new Date(rssFeed.items[0].pubDate);
+      const lastPubDate = new Date(rssFeed.items[0].pubDate);
       axios.get(createYQLRequest(rssFeed.feed.url))
         .then((response) => {
-          const data = executeDate(response.data, rssFeed.feed.url);
-          const lastPosts = data.items.filter(({ pubDate }) => new Date(pubDate) > lastDate);
+          const data = extractDate(response.data, rssFeed.feed.url);
+          const lastPosts = data.items.filter(({ pubDate }) => new Date(pubDate) > lastPubDate);
 
           if (lastPosts.length === 0) {
             return;
