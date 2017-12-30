@@ -86,17 +86,6 @@ export default () => {
     return yqlLink;
   };
 
-  const extractDate = (data) => { // eslint-disable-line
-    try {
-      const { title, description, item: items } = data.query.results.rss.channel;
-
-      return { feed: { title, description }, items };
-    } catch (err) {
-      renderAlert('error');
-      submitButton.disabled = false;
-    }
-  };
-
   const onRssFormSubmit = (evt) => {
     evt.preventDefault();
     submitButton.disabled = true;
@@ -104,7 +93,13 @@ export default () => {
     axios.get(requestUrl)
       .then(
         (response) => {
-          const rssFeed = extractDate(response.data);
+          const { status } = response.data.query.meta.url;
+          if (status !== '200') {
+            renderAlert('error');
+            return;
+          }
+          const { title, description, item: items } = response.data.query.results.rss.channel;
+          const rssFeed = { feed: { title, description }, items };
           rssFeed.feed = { ...rssFeed.feed, id: uniqueId(), url: state.rssLink };
           state.feedsList.push(rssFeed);
           rssGetForm.reset();
@@ -124,8 +119,8 @@ export default () => {
       const lastPubDate = new Date(rssFeed.items[0].pubDate);
       axios.get(createYQLRequest(rssFeed.feed.url))
         .then((response) => {
-          const data = extractDate(response.data, rssFeed.feed.url);
-          const lastPosts = data.items.filter(({ pubDate }) => new Date(pubDate) > lastPubDate);
+          const { item: items } = response.data.query.results.rss.channel;
+          const lastPosts = items.filter(({ pubDate }) => new Date(pubDate) > lastPubDate);
 
           if (lastPosts.length === 0) {
             return;
