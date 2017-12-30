@@ -12,7 +12,7 @@ server:
 
 build:
 	rm -rf dist
-	npm run webpack --open -- -p --env production
+	npm run webpack -- -p --env production
 
 test:
 	npm test

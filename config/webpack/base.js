@@ -22,7 +22,7 @@ export default () => ({
   ],
   output: {
     path: path.join(__dirname, '../..', 'dist'),
-    filename: 'js/bundle.main.js',
+    filename: 'js/[name].[chunkhash].main.js',
   },
   module: {
     rules: [
